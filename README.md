@@ -22,25 +22,8 @@
 
 ## 🧩 Flagship Repositories
 > Swap links/titles below with your real repos.
-
-| Repository | Description | Tech |
-|---|---|---|
-| [**automation-lib**](https://github.com/technyder/automation-lib) | Standardized library for workflows & integrations | Python · FastAPI · GitHub Actions |
-| [**scraping-portfolio**](https://github.com/technyder/scraping-portfolio) | Curated scrapers with docs & samples | Playwright · BeautifulSoup |
-| [**data-platform**](https://github.com/technyder/data-platform) | Ingestion → transform → serve (private) | PostgreSQL · dbt · BigQuery |
-
 > Pin these on the org profile for quick access.
 
----
-
-**What we deliver (quick view)**
-
-✓ data engineering: <p>ingestion → transform → warehouse (postgresql, bigquery, dbt)</p>
-✓ ai automation: <p>llm agents, document workflows, async jobs</p>
-✓ web development: <p>next. js/react frontends, fastapi/node backends</p>
-✓ mobile development: <p>flutter / react native apps</p>
-✓ scraping & qa: <p>playwright-based crawlers, test automation</p>
-✓ cloud & devops: <p>aws/gcp/azure, docker, github actions, iac-ready</p>
 ---
 
 ## 📚 How we work
