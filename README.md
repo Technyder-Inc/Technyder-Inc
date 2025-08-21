@@ -31,8 +31,6 @@ Semantic Layers · BI-ready Datasets · Reporting Dashboards
 
 ## 📈 Daily Push Activity
 
-![Org Daily Commits](https://img.shields.io/github/commit-activity/d/Technyder?color=blue&label=Daily%20Commits&style=for-the-badge)
-
 <p align="center">
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=Technyder-Inc&theme=tokyo-night&hide_border=true&custom_title=Technyder%20Daily%20Pushes" alt="Technyder Activity Graph"/>
 </p>
