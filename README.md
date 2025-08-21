@@ -11,9 +11,7 @@
   <a href="mailto:hello@technyder.co"><img src="https://img.shields.io/badge/📧%20Contact-hello@technyder.co-red?style=flat-square" /></a>
   <a href="https://www.linkedin.com/company/technyder"><img src="https://img.shields.io/badge/💼%20LinkedIn-Follow-green?style=flat-square" /></a>
 </p>
-
 ---
-
 ## 🚀 What we do
 - ***Data Engineering*** — ingestion → transformation → warehousing, quality & governance  
 - ***AI Automation*** — agents, workflow orchestration, LLM pipelines  
@@ -35,31 +33,14 @@
 
 ---
 
-**Data Engineering**
-<p align="center"> <img src="https://skillicons.dev/icons?i=python,pandas,numpy,postgresql,mysql,mongodb,bigquery" /> </p>
-**AI / ML**
-<p align="center"> <img src="https://skillicons.dev/icons?i=tensorflow,pytorch,sklearn" /><img src="https://img.shields.io/badge/LLM-OpenAI%20%7C%20LangChain-111?logo=openai&logoColor=white" /> </p>
-**Automation & Orchestration**
-<p align="center"> <img src="https://img.shields.io/badge/Orchestration-Apache%20Airflow-017CEE?logo=apacheairflow&logoColor=white" /><img src="https://img.shields.io/badge/Orchestration-Prefect-1F3B4D?logo=prefect&logoColor=white" /> <img src="https://skillicons.dev/icons?i=playwright" /><img src="https://img.shields.io/badge/ETL-dbt-FE4C4C?logo=dbt&logoColor=white" /> </p>
-**Web Backend**
-<p align="center"> <img src="https://skillicons.dev/icons?i=fastapi,flask,nodejs" /> </p>
-**Web Frontend**
-<p align="center"> <img src="https://skillicons.dev/icons?i=react,nextjs,js,ts,html,css,tailwind" /> </p>
-**Mobile**
-<p align="center"> <img src="https://skillicons.dev/icons?i=flutter,react" /> <img src="https://skillicons.dev/icons?i=androidstudio,kotlin,swift" /> </p>
-**Cloud & DevOps**
-<p align="center"> <img src="https://skillicons.dev/icons?i=aws,gcp,azure,docker,linux,git,github" /> <br/> <img src="https://img.shields.io/badge/CI-CD-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white" /> </p>
-**BI & Visualization**
-<p align="center"> <img src="https://skillicons.dev/icons?i=plotly" /> <img src="https://img.shields.io/badge/BI-Power%20BI-F2C811?logo=powerbi&logoColor=111" /> <img src="https://img.shields.io/badge/BI-Looker-4285F4?logo=looker&logoColor=white" /> </p>
-
 **What we deliver (quick view)**
 
-✓ Data Engineering: <p>ingestion → transform → warehouse (PostgreSQL, BigQuery, dbt)</p>
-✓ AI Automation: <p>LLM agents, document workflows, async jobs</p>
-✓ Web Development: <p>Next.js/React frontends, FastAPI/Node backends</p>
-✓ Mobile Development: <p>Flutter / React Native apps</p>
-✓ Scraping & QA: <p>Playwright-based crawlers, test automation</p>
-✓ Cloud & DevOps: <p>AWS/GCP/Azure, Docker, GitHub Actions, IaC-ready</p>
+✓ data engineering: <p>ingestion → transform → warehouse (postgresql, bigquery, dbt)</p>
+✓ ai automation: <p>llm agents, document workflows, async jobs</p>
+✓ web development: <p>next. js/react frontends, fastapi/node backends</p>
+✓ mobile development: <p>flutter / react native apps</p>
+✓ scraping & qa: <p>playwright-based crawlers, test automation</p>
+✓ cloud & devops: <p>aws/gcp/azure, docker, github actions, iac-ready</p>
 ---
 
 ## 📚 How we work
@@ -69,7 +50,6 @@
 - Ethical scraping: respect **robots.txt** & site TOS
 
 ---
-
 ## 🤝 Work with us
 - Need data pipelines or automated collection at scale?  
 - Email **auh@technyder.co** or open a **Discussion** in this org.
