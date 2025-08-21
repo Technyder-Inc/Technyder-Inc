@@ -15,10 +15,10 @@
 ---
 
 ## 🚀 What we do
-- **Data Engineering** — ingestion → transformation → warehousing, quality & governance  
-- **AI Automation** — agents, workflow orchestration, LLM pipelines  
-- **Compliant Web Scraping** — structured collection, parsing, enrichment  
-- **Analytics Enablement** — semantic layers & BI-ready datasets
+- ***Data Engineering*** — ingestion → transformation → warehousing, quality & governance  
+- ***AI Automation*** — agents, workflow orchestration, LLM pipelines  
+- ***Compliant Web Scraping*** — structured collection, parsing, enrichment  
+- ***Analytics Enablement*** — semantic layers & BI-ready datasets
 
 ---
 
@@ -36,11 +36,11 @@
 ---
 
 **Data Engineering**
-<p align="center"> <img src="https://skillicons.dev/icons?i=python,pandas,numpy,postgresql,mysql,mongodb,bigquery,redis" /> </p>
+<p align="center"> <img src="https://skillicons.dev/icons?i=python,pandas,numpy,postgresql,mysql,mongodb,bigquery" /> </p>
 **AI / ML**
-<p align="center"> <img src="https://skillicons.dev/icons?i=tensorflow,pytorch,sklearn" /> <br/> <img src="https://img.shields.io/badge/LLM-OpenAI%20%7C%20LangChain-111?logo=openai&logoColor=white" /> </p>
+<p align="center"> <img src="https://skillicons.dev/icons?i=tensorflow,pytorch,sklearn" /><img src="https://img.shields.io/badge/LLM-OpenAI%20%7C%20LangChain-111?logo=openai&logoColor=white" /> </p>
 **Automation & Orchestration**
-<p align="center"> <img src="https://img.shields.io/badge/Orchestration-Apache%20Airflow-017CEE?logo=apacheairflow&logoColor=white" /> <img src="https://img.shields.io/badge/Orchestration-Prefect-1F3B4D?logo=prefect&logoColor=white" /> <img src="https://skillicons.dev/icons?i=playwright" /> <img src="https://img.shields.io/badge/ETL-dbt-FE4C4C?logo=dbt&logoColor=white" /> </p>
+<p align="center"> <img src="https://img.shields.io/badge/Orchestration-Apache%20Airflow-017CEE?logo=apacheairflow&logoColor=white" /><img src="https://img.shields.io/badge/Orchestration-Prefect-1F3B4D?logo=prefect&logoColor=white" /> <img src="https://skillicons.dev/icons?i=playwright" /><img src="https://img.shields.io/badge/ETL-dbt-FE4C4C?logo=dbt&logoColor=white" /> </p>
 **Web Backend**
 <p align="center"> <img src="https://skillicons.dev/icons?i=fastapi,flask,nodejs" /> </p>
 **Web Frontend**
@@ -54,12 +54,12 @@
 
 **What we deliver (quick view)**
 
-Data Engineering: ingestion → transform → warehouse (PostgreSQL, BigQuery, dbt)
-AI Automation: LLM agents, document workflows, async jobs
-Web Development: Next.js/React frontends, FastAPI/Node backends
-Mobile Development: Flutter / React Native apps
-Scraping & QA: Playwright-based crawlers, test automation
-Cloud & DevOps: AWS/GCP/Azure, Docker, GitHub Actions, IaC-ready
+✓ Data Engineering: <p>ingestion → transform → warehouse (PostgreSQL, BigQuery, dbt)</p>
+✓ AI Automation: <p>LLM agents, document workflows, async jobs</p>
+✓ Web Development: <p>Next.js/React frontends, FastAPI/Node backends</p>
+✓ Mobile Development: <p>Flutter / React Native apps</p>
+✓ Scraping & QA: <p>Playwright-based crawlers, test automation</p>
+✓ Cloud & DevOps: <p>AWS/GCP/Azure, Docker, GitHub Actions, IaC-ready</p>
 ---
 
 ## 📚 How we work
