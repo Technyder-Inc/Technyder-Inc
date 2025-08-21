@@ -12,11 +12,11 @@
   <a href="https://www.linkedin.com/company/technyder"><img src="https://img.shields.io/badge/💼%20LinkedIn-Follow-green?style=flat-square" /></a>
 </p>
 ---
-## 🚀 What we do
-- ***Data Engineering*** — ingestion → transformation → warehousing, quality & governance  
-- ***AI Automation*** — agents, workflow orchestration, LLM pipelines  
-- ***Compliant Web Scraping*** — structured collection, parsing, enrichment  
-- ***Analytics Enablement*** — semantic layers & BI-ready datasets
+ 🚀 What we do
+- *** Data Engineering *** — ingestion → transformation → warehousing, quality & governance  
+- *** AI Automation *** — agents, workflow orchestration, LLM pipelines  
+- *** Compliant Web Scraping *** — structured collection, parsing, enrichment  
+- *** Analytics Enablement *** — semantic layers & BI-ready datasets
 
 ---
 
