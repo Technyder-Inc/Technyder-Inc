@@ -13,10 +13,10 @@
 </p>
 ---
  🚀 What we do
-- *** Data Engineering *** — ingestion → transformation → warehousing, quality & governance  
-- *** AI Automation *** — agents, workflow orchestration, LLM pipelines  
-- *** Compliant Web Scraping *** — structured collection, parsing, enrichment  
-- *** Analytics Enablement *** — semantic layers & BI-ready datasets
+### **Data Engineering** — ingestion → transformation → warehousing, quality & governance  
+### **AI Automation** — agents, workflow orchestration, LLM pipelines  
+### **Compliant Web Scraping** — structured collection, parsing, enrichment  
+### **Analytics Enablement** — semantic layers & BI-ready datasets
 
 ---
 
