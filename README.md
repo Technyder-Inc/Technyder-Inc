@@ -29,14 +29,6 @@ Semantic Layers · BI-ready Datasets · Reporting Dashboards
 
 ---
 
-## 📈 Daily Push Activity
-
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=Technyder-Inc&theme=tokyo-night&hide_border=true&custom_title=Technyder%20Daily%20Pushes" alt="Technyder Activity Graph"/>
-</p>
-
----
-
 ## 🧩 Flagship Repositories
 > Swap links/titles below with your real repos.
 > Pin these on the org profile for quick access.
