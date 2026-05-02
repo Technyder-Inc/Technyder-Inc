@@ -7,7 +7,7 @@
 <h1 align="center">Technyder · Data Engineering & AI Automation</h1>
 
 <p align="center">
-  <a href="https://technyder.co"><img src="https://img.shields.io/badge/🌐%20Website-technyder.co-blue?style=flat-square" /></a>
+  <a href="https://technyder.co"><img src="[https://img.shields.io/badge/🌐%20Website-technyder.co-blue?style=flat-square](https://technyder.co/assets/technyder-logo-05b.svg)" /></a>
   <a href="mailto:hello@technyder.co"><img src="https://img.shields.io/badge/📧%20Contact-hello@technyder.co-red?style=flat-square" /></a>
   <a href="https://www.linkedin.com/company/technyder"><img src="https://img.shields.io/badge/💼%20LinkedIn-Follow-green?style=flat-square" /></a>
 </p>
