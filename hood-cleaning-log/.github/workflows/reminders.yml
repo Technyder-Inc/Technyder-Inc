@@ -1,0 +1,16 @@
+name: Daily SMS Reminders
+
+on:
+  schedule:
+    - cron: "0 13 * * *"   # 08:00 US Central (UTC-5)
+  workflow_dispatch:
+
+jobs:
+  send-reminders:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger reminder API
+        run: |
+          curl -s -f -X POST \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            "${{ secrets.NEXT_PUBLIC_APP_URL }}/api/reminders"
