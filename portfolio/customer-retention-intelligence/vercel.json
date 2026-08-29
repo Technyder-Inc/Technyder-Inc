@@ -1,8 +1,18 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/api/employees"
+    },
+    {
+      "source": "/employees",
+      "destination": "/api/employees"
+    }
+  ],
   "functions": {
-    "app.py": {
-      "excludeFiles": "{ml/**,tests/**,docs/**,data/**,assets/**,public/**,artifacts/retention_model.joblib,artifacts/model_card.json,artifacts/feature_importance.json,artifacts/drift_report.json,artifacts/portfolio_sample.json,artifacts/test_scored.csv}"
+    "api/index.py": {
+      "excludeFiles": "{ml/**,tests/**,docs/**,data/**,assets/**,public/**,app.py,build.py,Dockerfile,Makefile,requirements-dev.txt,requirements-training.txt,pyproject.toml,artifacts/**}"
     }
   }
 }
