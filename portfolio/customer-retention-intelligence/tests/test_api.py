@@ -81,3 +81,13 @@ def test_vercel_employee_entrypoint():
     page = vercel_client.get("/api/employees")
     assert page.status_code == 200
     assert "Employee Attrition Analyzer" in page.text
+
+
+def test_employee_page_has_pagination_controls():
+    response = client.get("/employees")
+    assert response.status_code == 200
+    assert 'id="employeePageSize"' in response.text
+    assert 'id="employeePrev"' in response.text
+    assert 'id="employeeNext"' in response.text
+    assert "renderEmployeePage()" in response.text
+    assert "changeEmployeePageSize" in response.text
