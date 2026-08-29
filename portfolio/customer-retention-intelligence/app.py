@@ -13,6 +13,8 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 
+from employee_attrition import router as employee_router
+
 ROOT = Path(__file__).resolve().parent
 
 
@@ -178,6 +180,8 @@ app = FastAPI(
     ),
 )
 
+app.include_router(employee_router)
+
 
 DASHBOARD = """<!doctype html>
 <html>
@@ -205,7 +209,7 @@ a{color:#111827;font-weight:700}
 <body>
 <div class="w">
 <div class="k">Technyder / ML Portfolio</div>
-<h1>Customer Retention Intelligence</h1>
+<h1>Customer Retention Intelligence</h1><p><a href="/employees">Employee Attrition Analyzer →</a></p>
 <div class="sub">
 Predict 60-day churn, explain account risk, quantify recurring revenue exposure,
 and prioritize retention actions by expected financial value.
