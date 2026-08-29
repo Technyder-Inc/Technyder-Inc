@@ -1,20 +1,69 @@
 from fastapi.testclient import TestClient
 from app import app
 
-client=TestClient(app)
+client = TestClient(app)
+
 
 def test_health():
-    r=client.get("/health")
-    assert r.status_code==200 and r.json()["status"]=="ok"
+    response = client.get("/health")
+    assert response.status_code == 200
+    assert response.json()["status"] == "ok"
+
 
 def test_score():
-    r=client.post("/api/score",json={})
-    assert r.status_code==200
-    body=r.json()
-    assert 0<=body["churn_probability"]<=1
+    response = client.post("/api/score", json={})
+    assert response.status_code == 200
+    body = response.json()
+    assert 0 <= body["churn_probability"] <= 1
     assert "annual_revenue_at_risk" in body
     assert "estimated_uplift" in body
 
+
 def test_model_card():
-    r=client.get("/api/model-card")
-    assert r.status_code==200 and r.json()["data"]["synthetic"] is True
+    response = client.get("/api/model-card")
+    assert response.status_code == 200
+    assert response.json()["data"]["synthetic"] is True
+
+
+def test_employee_page_has_top_right_sample_and_reasoning_ui():
+    response = client.get("/employees")
+    assert response.status_code == 200
+    assert "Sample data" in response.text
+    assert "Why this risk?" in response.text
+    assert "preAnalysis" in response.text
+    assert "runAnalysis()" in response.text
+
+
+def test_employee_sample_upload_returns_conceptual_explanations():
+    template = client.get("/api/employee-attrition/template.csv")
+    assert template.status_code == 200
+
+    response = client.post(
+        "/api/employee-attrition/upload",
+        files={
+            "file": (
+                "employee_attrition_template.csv",
+                template.content,
+                "text/csv",
+            )
+        },
+    )
+    assert response.status_code == 200
+
+    body = response.json()
+    assert "methodology" in body
+    assert body["methodology"]["model_type"] == "Transparent logistic attrition-risk model"
+    assert "employees" in body and body["employees"]
+
+    employee = body["employees"][0]
+    assert "model_context" in employee
+    assert "summary" in employee["model_context"]
+    assert "top_signals" in employee
+
+    if employee["top_signals"]:
+        signal = employee["top_signals"][0]
+        assert "display_value" in signal
+        assert "benchmark" in signal
+        assert "model_effect_pp" in signal
+        assert "why" in signal
+        assert "caution" in signal
