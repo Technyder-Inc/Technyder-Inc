@@ -52,7 +52,7 @@ def test_employee_sample_upload_returns_conceptual_explanations():
 
     body = response.json()
     assert "methodology" in body
-    assert body["methodology"]["model_type"] == "Transparent logistic attrition-risk model"
+    assert body["methodology"]["model_type"] == "Attrition risk scoring model"
     assert "employees" in body and body["employees"]
 
     employee = body["employees"][0]
