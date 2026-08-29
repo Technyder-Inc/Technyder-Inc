@@ -722,6 +722,13 @@ details.reason summary{cursor:pointer;font-weight:700;color:#344054}
 .signal-caution{font-size:11px;color:#98a2b3;line-height:1.45;margin-top:5px}
 .bar-track{height:8px;background:#f2f4f7;border-radius:99px;overflow:hidden;min-width:180px}
 .bar{height:100%;background:#667085;border-radius:99px}
+.pagination{display:flex;justify-content:space-between;gap:16px;align-items:center;padding-top:14px;flex-wrap:wrap}
+.page-info{font-size:12px;color:#667085}
+.page-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.page-btn{background:#fff;color:#344054;border:1px solid #d0d5dd;padding:7px 10px;border-radius:8px;font-size:12px;min-width:34px}
+.page-btn.active{background:#101828;color:#fff;border-color:#101828}
+.page-btn:disabled{opacity:.4;cursor:not-allowed}
+.page-size{border:1px solid #d0d5dd;border-radius:8px;padding:7px 9px;background:#fff;color:#344054;font-size:12px}
 .note{font-size:12px;color:#667085;line-height:1.55;margin-top:18px;padding:14px 16px;background:#f9fafb;border-radius:12px}
 @media(max-width:950px){.grid{grid-template-columns:1fr 1fr}.method{grid-template-columns:1fr}.top,.result-head{align-items:flex-start}.top{flex-direction:column}.sample{align-self:flex-end;margin-top:-56px}}
 @media(max-width:620px){h1{font-size:34px}.grid{grid-template-columns:1fr}.upload-row{align-items:stretch}.file-wrap{min-width:0}.sample{margin-top:0;align-self:flex-start}}
@@ -833,6 +840,20 @@ details.reason summary{cursor:pointer;font-weight:700;color:#344054}
         <tbody id="rows"></tbody>
       </table>
     </div>
+    <div class="pagination">
+      <div class="page-info" id="employeePageInfo">—</div>
+      <div class="page-actions">
+        <label class="page-info" for="employeePageSize">Rows</label>
+        <select id="employeePageSize" class="page-size" onchange="changeEmployeePageSize(this.value)">
+          <option value="10">10</option>
+          <option value="25" selected>25</option>
+          <option value="50">50</option>
+        </select>
+        <button class="page-btn" id="employeePrev" onclick="changeEmployeePage(-1)">Previous</button>
+        <div id="employeePages" class="page-actions"></div>
+        <button class="page-btn" id="employeeNext" onclick="changeEmployeePage(1)">Next</button>
+      </div>
+    </div>
   </div>
 
   <div class="card section">
@@ -858,6 +879,87 @@ const pct=v=>v===null||v===undefined?'N/A':(v*100).toFixed(1)+'%';
 const esc=value=>String(value??'').replace(/[&<>"']/g,char=>({
   '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
 }[char]));
+
+let employeeResults=[];
+let employeePage=1;
+let employeePageSize=25;
+
+function employeeRowHtml(employee){
+  const pills=employee.top_signals.slice(0,3).map(signal=>
+    '<span class="signal-pill">'+esc(signal.signal)+'</span>'
+  ).join('');
+
+  return '<tr>'+
+    '<td><strong>'+esc(employee.employee_id)+'</strong></td>'+
+    '<td>'+esc(employee.department)+'</td>'+
+    '<td>'+esc(employee.role_level)+'</td>'+
+    '<td><span class="badge '+esc(employee.risk_band)+'">'+esc(employee.risk_band)+'</span></td>'+
+    '<td><strong>'+pct(employee.attrition_probability)+'</strong><div class="meta">'+
+      (employee.model_context.risk_above_baseline_pp>=0?'+':'')+
+      employee.model_context.risk_above_baseline_pp.toFixed(1)+' pp vs baseline</div></td>'+
+    '<td>'+pills+'</td>'+
+    '<td>'+employeeReasoning(employee)+'</td>'+
+  '</tr>';
+}
+
+function renderEmployeePage(){
+  const total=employeeResults.length;
+  const totalPages=Math.max(1,Math.ceil(total/employeePageSize));
+  employeePage=Math.min(Math.max(employeePage,1),totalPages);
+
+  const start=(employeePage-1)*employeePageSize;
+  const end=Math.min(start+employeePageSize,total);
+  const pageRows=employeeResults.slice(start,end);
+
+  document.getElementById('rows').innerHTML=pageRows.map(employeeRowHtml).join('');
+  document.getElementById('employeePageInfo').textContent=
+    total===0?'No active employees':'Showing '+(start+1)+'–'+end+' of '+total+' employees';
+
+  document.getElementById('employeePrev').disabled=employeePage<=1;
+  document.getElementById('employeeNext').disabled=employeePage>=totalPages;
+
+  const pages=[];
+  const from=Math.max(1,employeePage-2);
+  const to=Math.min(totalPages,employeePage+2);
+
+  if(from>1){
+    pages.push('<button class="page-btn" onclick="goEmployeePage(1)">1</button>');
+    if(from>2) pages.push('<span class="page-info">…</span>');
+  }
+
+  for(let page=from;page<=to;page++){
+    pages.push(
+      '<button class="page-btn '+(page===employeePage?'active':'')+
+      '" onclick="goEmployeePage('+page+')">'+page+'</button>'
+    );
+  }
+
+  if(to<totalPages){
+    if(to<totalPages-1) pages.push('<span class="page-info">…</span>');
+    pages.push(
+      '<button class="page-btn" onclick="goEmployeePage('+totalPages+')">'+
+      totalPages+'</button>'
+    );
+  }
+
+  document.getElementById('employeePages').innerHTML=pages.join('');
+}
+
+function goEmployeePage(page){
+  employeePage=page;
+  renderEmployeePage();
+}
+
+function changeEmployeePage(direction){
+  employeePage+=direction;
+  renderEmployeePage();
+}
+
+function changeEmployeePageSize(value){
+  employeePageSize=parseInt(value,10)||25;
+  employeePage=1;
+  renderEmployeePage();
+}
 
 function signalHtml(signal){
   const cls=signal.direction==='raises risk'?'raise':'reduce';
@@ -933,23 +1035,10 @@ function renderResults(data,fileName){
     fileName+' · '+data.methodology.model_type+
     ' · High risk ≥ '+pct(data.methodology.high_risk_threshold);
 
-  document.getElementById('rows').innerHTML=data.employees.slice(0,75).map(employee=>{
-    const pills=employee.top_signals.slice(0,3).map(signal=>
-      '<span class="signal-pill">'+esc(signal.signal)+'</span>'
-    ).join('');
-
-    return '<tr>'+
-      '<td><strong>'+esc(employee.employee_id)+'</strong></td>'+
-      '<td>'+esc(employee.department)+'</td>'+
-      '<td>'+esc(employee.role_level)+'</td>'+
-      '<td><span class="badge '+esc(employee.risk_band)+'">'+esc(employee.risk_band)+'</span></td>'+
-      '<td><strong>'+pct(employee.attrition_probability)+'</strong><div class="meta">'+
-        (employee.model_context.risk_above_baseline_pp>=0?'+':'')+
-        employee.model_context.risk_above_baseline_pp.toFixed(1)+' pp vs baseline</div></td>'+
-      '<td>'+pills+'</td>'+
-      '<td>'+employeeReasoning(employee)+'</td>'+
-    '</tr>';
-  }).join('');
+  employeeResults=data.employees || [];
+  employeePage=1;
+  employeePageSize=parseInt(document.getElementById('employeePageSize').value,10)||25;
+  renderEmployeePage();
 
   const maxRate=Math.max(
     0.01,
@@ -979,6 +1068,9 @@ function resetAnalysis(){
   document.getElementById('result').classList.add('hidden');
   document.getElementById('file').value='';
   document.getElementById('error').textContent='';
+  employeeResults=[];
+  employeePage=1;
+  document.getElementById('employeePageSize').value='25';
   document.getElementById('preAnalysis').classList.remove('hidden');
   window.scrollTo({top:0,behavior:'smooth'});
 }
