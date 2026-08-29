@@ -69,7 +69,7 @@ SIGNAL_GUIDANCE = {
             "The model increases risk only for overtime above the 12-hour reference point."
         ),
         "caution": (
-            "Overtime can be seasonal, voluntary, or project-specific. Review the operating context before interpreting it."
+            "Check whether the overtime is temporary, seasonal, or voluntary."
         ),
     },
     "Long weekly hours": {
@@ -79,25 +79,25 @@ SIGNAL_GUIDANCE = {
             "Risk begins to rise only above the 45-hour reference point."
         ),
         "caution": (
-            "This is a workload pattern, not a judgment about performance or commitment."
+            "Review workload and scheduling context before acting."
         ),
     },
     "Absence frequency": {
         "benchmark": "Each absent day in the last 90 days contributes modestly",
         "why": (
-            "Repeated absence can coincide with scheduling friction or reduced continuity, so the model treats it as a weak contextual signal."
+            "More absence days add a small amount of risk because repeated absence can coincide with scheduling or engagement issues."
         ),
         "caution": (
-            "Absence has many legitimate causes. Never infer health, disability, intent, or misconduct from this signal."
+            "Do not infer health, disability, intent, or misconduct from absence data."
         ),
     },
     "Late arrivals": {
         "benchmark": "Each late arrival in the last 90 days contributes slightly",
         "why": (
-            "Repeated lateness can indicate scheduling or commute friction, so the model uses it as a low-weight supporting signal."
+            "Repeated late arrivals add a small amount of risk and may point to scheduling or commute friction."
         ),
         "caution": (
-            "Treat this as operational context only. Do not use it as a disciplinary recommendation."
+            "Use as operational context only."
         ),
     },
     "Manager changes": {
@@ -107,7 +107,7 @@ SIGNAL_GUIDANCE = {
             "The model therefore gives this signal a larger stepwise effect."
         ),
         "caution": (
-            "A manager change can also be positive. Review whether the transition improved or disrupted the employee experience."
+            "Review the reason and outcome of each management change."
         ),
     },
     "Time since promotion": {
@@ -117,7 +117,7 @@ SIGNAL_GUIDANCE = {
             "The model starts increasing risk after 24 months."
         ),
         "caution": (
-            "Promotion cadence differs by role and company. Interpret against the employee's career path and expectations."
+            "Compare with the normal progression path for the role."
         ),
     },
     "Time since pay raise": {
@@ -127,16 +127,16 @@ SIGNAL_GUIDANCE = {
             "The model starts increasing risk after 18 months."
         ),
         "caution": (
-            "This is not a compensation recommendation and should not be used to determine pay."
+            "This is a retention signal, not a pay recommendation."
         ),
     },
     "Long commute": {
         "benchmark": "More than 40 minutes one way",
         "why": (
-            "Long commutes can add recurring time friction. The model begins increasing the signal beyond 40 minutes."
+            "Commutes above 40 minutes raise the score because recurring travel time can add workday friction."
         ),
         "caution": (
-            "Remote-work patterns and personal preferences vary. Use this only as optional retention context."
+            "Review alongside remote-work arrangements and employee preference."
         ),
     },
     "Very short tenure": {
@@ -146,16 +146,16 @@ SIGNAL_GUIDANCE = {
             "so the model adds a one-time early-tenure risk factor."
         ),
         "caution": (
-            "Short tenure alone should never trigger an employment action. It is most useful for onboarding and support planning."
+            "Use this signal to review onboarding and manager support."
         ),
     },
     "Recent training": {
         "benchmark": "Training hours during the last 90 days",
         "why": (
-            "Recent development activity is treated as a protective signal because learning investment can increase role growth and connection."
+            "Recent training reduces the score because active development can support role growth and engagement."
         ),
         "caution": (
-            "Training does not guarantee retention; it simply offsets some modeled risk when present."
+            "Treat it as one positive indicator among the wider employee context."
         ),
     },
 }
@@ -320,19 +320,19 @@ def employee_attrition_score(
     if upward:
         strongest = ", ".join(item["signal"].lower() for item in upward[:3])
         summary = (
-            f"The model estimates {probability * 100:.1f}% attrition risk, "
+            f"Attrition risk is {probability * 100:.1f}%, "
             f"{max(0.0, (probability - baseline_probability) * 100):.1f} percentage points "
-            f"above its neutral baseline. The strongest modeled pressure comes from {strongest}."
+            f"above baseline. The main drivers are {strongest}."
         )
     else:
         summary = (
-            f"The model estimates {probability * 100:.1f}% attrition risk. "
-            "No major upward operating signal is currently dominating the score."
+            f"Attrition risk is {probability * 100:.1f}%. "
+            "No major risk driver is currently dominating the score."
         )
 
     if protective:
         summary += (
-            f" {protective[0]['signal']} is currently offsetting part of that modeled pressure."
+            f" {protective[0]['signal']} is reducing part of that risk."
         )
 
     context = {
@@ -512,7 +512,7 @@ def analyze_employee_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "department_summary": department_summary,
         "employees": scored[:200],
         "methodology": {
-            "model_type": "Transparent logistic attrition-risk model",
+            "model_type": "Attrition risk scoring model",
             "baseline_probability": baseline_probability,
             "medium_risk_threshold": MEDIUM_RISK_THRESHOLD,
             "high_risk_threshold": HIGH_RISK_THRESHOLD,
@@ -732,12 +732,11 @@ details.reason summary{cursor:pointer;font-weight:700;color:#344054}
 <div id="preAnalysis">
   <div class="top">
     <div>
-      <div class="k">Technyder / Workforce Analytics Demo</div>
+      <div class="k">Technyder / Workforce Analytics</div>
       <h1>Employee Attrition Analyzer</h1>
       <div class="sub">
-        Upload employee snapshots to measure historical churn and review current retention pressure.
-        The analysis explains not only <strong>which signals moved</strong>, but also
-        <strong>why the model raised them</strong> and how much each signal changed the score.
+        Upload employee data to measure historical churn, estimate current attrition risk,
+        and review the factors driving each employee score.
       </div>
     </div>
 
@@ -755,8 +754,7 @@ details.reason summary{cursor:pointer;font-weight:700;color:#344054}
       <div class="k">Start analysis</div>
       <h2 style="margin-top:7px">Upload CSV or Excel</h2>
       <div class="sub" style="font-size:13px">
-        Use one row per employee snapshot. If <code>left_company</code> exists, the dashboard also
-        calculates observed historical churn. Current active employees receive a retention-risk score.
+        Use one row per employee snapshot. If <code>left_company</code> is included, historical churn is calculated separately from current employee risk.
       </div>
       <div class="upload-row">
         <div class="file-wrap"><input id="file" type="file" accept=".csv,.xlsx"></div>
@@ -769,10 +767,9 @@ details.reason summary{cursor:pointer;font-weight:700;color:#344054}
 
 <div id="loading" class="loading hidden">
   <div class="spinner"></div>
-  <h2>Running workforce analysis</h2>
+  <h2>Analyzing employee data</h2>
   <div class="sub" style="margin:auto">
-    Validating employee rows, calculating attrition scores, comparing departments,
-    and generating signal-level explanations.
+    Validating rows, calculating attrition scores, and preparing employee and department results.
   </div>
 </div>
 
@@ -780,7 +777,7 @@ details.reason summary{cursor:pointer;font-weight:700;color:#344054}
   <div class="result-head">
     <div>
       <div class="k">Analysis complete</div>
-      <h2 id="resultTitle" style="font-size:27px;margin-top:5px">Workforce retention analysis</h2>
+      <h2 id="resultTitle" style="font-size:27px;margin-top:5px">Employee attrition analysis</h2>
       <div class="meta" id="fileMeta"></div>
     </div>
     <button class="secondary" onclick="resetAnalysis()">Analyze another file</button>
@@ -796,44 +793,40 @@ details.reason summary{cursor:pointer;font-weight:700;color:#344054}
 
   <div class="method">
     <div class="card guide">
-      <div class="label">How to read predicted attrition</div>
-      <h3 style="margin-top:7px">Portfolio pressure, not expected resignations</h3>
+      <div class="label">Predicted attrition</div>
+      <h3 style="margin-top:7px">Average risk across active employees</h3>
       <p>
-        Predicted attrition is the average modeled risk across active employees.
-        A 20% value means the current signal mix resembles a higher-pressure workforce state;
-        it does not mean exactly 20% of employees will resign.
+        Shows the average attrition risk across active employees. Use it to compare teams and identify where follow-up may be useful; it is not a forecast of an exact number of resignations.
       </p>
     </div>
     <div class="card guide">
       <div class="label">Observed churn</div>
       <h3 style="margin-top:7px">Historical outcome</h3>
       <p>
-        This KPI comes only from <code>left_company</code>. It describes the uploaded history and is
-        intentionally kept separate from the current-risk estimate.
+        Calculated only from <code>left_company</code>. It reports what happened historically and is kept separate from current risk scores.
       </p>
     </div>
     <div class="card guide">
-      <div class="label">Why a signal is raised</div>
-      <h3 style="margin-top:7px">Value → benchmark → model effect</h3>
+      <div class="label">Risk drivers</div>
+      <h3 style="margin-top:7px">Value → reference → effect</h3>
       <p>
-        Each explanation shows the employee value, the reference point it crossed,
-        and the approximate percentage-point effect on that employee's modeled risk.
+        Each driver shows the employee value, the reference point, and its approximate effect on the employee's attrition score.
       </p>
     </div>
   </div>
 
   <div class="card section">
-    <div class="k">Priority review</div>
-    <h2 style="margin-top:6px">Retention review queue</h2>
+    <div class="k">Employee review</div>
+    <h2 style="margin-top:6px">Employee risk review</h2>
     <div class="sub" style="font-size:13px;margin-bottom:10px">
-      Sorted by modeled attrition probability. Expand <strong>Why this risk?</strong> to see the conceptual reasoning.
+      Sorted by attrition score. Expand <strong>Why this risk?</strong> to see the main drivers.
     </div>
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
             <th>Employee</th><th>Department</th><th>Role</th><th>Risk</th>
-            <th>Probability</th><th>Primary signals</th><th>Model reasoning</th>
+            <th>Attrition score</th><th>Primary drivers</th><th>Details</th>
           </tr>
         </thead>
         <tbody id="rows"></tbody>
@@ -842,14 +835,14 @@ details.reason summary{cursor:pointer;font-weight:700;color:#344054}
   </div>
 
   <div class="card section">
-    <div class="k">Cohort view</div>
-    <h2 style="margin-top:6px">Department attrition pressure</h2>
+    <div class="k">Department view</div>
+    <h2 style="margin-top:6px">Department attrition risk</h2>
     <div class="sub" style="font-size:13px;margin-bottom:10px">
-      Compare average modeled pressure across active employees. Use this view for workforce planning before drilling into individuals.
+      Average attrition score across active employees by department.
     </div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Department</th><th>Active employees</th><th>Predicted attrition</th><th>Relative pressure</th></tr></thead>
+        <thead><tr><th>Department</th><th>Active employees</th><th>Predicted attrition</th><th>Relative risk</th></tr></thead>
         <tbody id="departments"></tbody>
       </table>
     </div>
@@ -973,8 +966,8 @@ function renderResults(data,fileName){
   }).join('');
 
   document.getElementById('note').innerHTML=
-    '<strong>Interpretation guardrail:</strong> '+esc(data.model_note)+
-    '<br><br><strong>Model concept:</strong> '+esc(data.methodology.interpretation);
+    '<strong>Usage:</strong> '+esc(data.model_note)+
+    '<br><br><strong>Scoring method:</strong> '+esc(data.methodology.interpretation);
 
   document.getElementById('loading').classList.add('hidden');
   document.getElementById('result').classList.remove('hidden');
