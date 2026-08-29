@@ -67,3 +67,17 @@ def test_employee_sample_upload_returns_conceptual_explanations():
         assert "model_effect_pp" in signal
         assert "why" in signal
         assert "caution" in signal
+
+
+def test_vercel_employee_entrypoint():
+    from api.index import app as vercel_app
+
+    vercel_client = TestClient(vercel_app)
+
+    health = vercel_client.get("/api/health")
+    assert health.status_code == 200
+    assert health.json()["status"] == "ok"
+
+    page = vercel_client.get("/api/employees")
+    assert page.status_code == 200
+    assert "Employee Attrition Analyzer" in page.text
