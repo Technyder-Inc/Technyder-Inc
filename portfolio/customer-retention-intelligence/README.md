@@ -4,7 +4,7 @@
 
 **Production-style B2B SaaS churn + retention decision system by Technyder.**
 
-**Live demo:** https://retention-intelligence-kxz7epthh-technyder-incs-projects.vercel.app  
+**Live demo:** https://retention-intelligence-technyder-incs-projects.vercel.app  
 **GitHub project:** https://github.com/Technyder-Inc/Technyder-Inc/tree/main/portfolio/customer-retention-intelligence
 
 This project goes beyond a basic churn classifier. It is designed to answer the four questions a retention team actually cares about:
@@ -154,7 +154,7 @@ Accounts with positive expected value can then be ranked into a retention action
 
 Interactive API documentation is available at:
 
-**Live API docs:** https://retention-intelligence-kxz7epthh-technyder-incs-projects.vercel.app/docs
+**Live API docs:** https://retention-intelligence-technyder-incs-projects.vercel.app/docs
 
 Endpoints:
 
@@ -185,23 +185,57 @@ Example scoring response:
 }
 ```
 
-## Local run
+## Run the deployed inference stack locally
+
+The checked-in portable model is enough to run the product API. The heavy ML libraries are **not** required for inference.
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install -r requirements-dev.txt
-
-python build.py
-pytest
+pip install -r requirements.txt
+pip install uvicorn==0.40.0
 uvicorn app:app --reload
 ```
+
+## Reproduce training + portable export
+
+Use the development/training environment only when you want to regenerate the synthetic data, retrain XGBoost and uplift models, and rebuild the portable serverless artifact.
+
+```bash
+pip install -r requirements-dev.txt
+python build.py
+pytest
+```
+
+`build.py` trains the full model stack and then exports a compressed pure-Python inference artifact to `artifacts/runtime_model.b64`.
 
 Open:
 
 - Dashboard: `http://localhost:8000`
 - API docs: `http://localhost:8000/docs`
 - Health: `http://localhost:8000/health`
+
+## Serverless deployment architecture
+
+The training environment and inference environment are deliberately separated.
+
+| Layer | Runtime |
+|---|---|
+| Training | pandas + NumPy + scikit-learn + XGBoost |
+| Portable export | compressed tree/preprocessing/calibration/uplift state |
+| Vercel inference | FastAPI + Python standard library |
+| Model artifact | ~156 KB compressed Base64 |
+| Build-time training on Vercel | **disabled** |
+
+This avoids bundling the full ML toolchain into a serverless function. The portable tree evaluator was checked against the native XGBoost pipeline and reproduces tested churn probabilities to approximately `1e-7` precision.
+
+Vercel should use this folder as the project root when connecting the monorepo:
+
+```
+portfolio/customer-retention-intelligence
+```
+
+The included `.vercelignore` also excludes training-only code and artifacts from the deployment bundle.
 
 ## Docker
 
