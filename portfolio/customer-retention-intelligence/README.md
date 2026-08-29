@@ -268,6 +268,29 @@ customer-retention-intelligence/
 └── .github/workflows/ci.yml
 ```
 
+## Employee CSV / Excel attrition analyzer
+
+The deployed demo also includes a separate workforce-retention page:
+
+**Employee analyzer:** `/employees`
+
+It accepts **CSV or Excel (.xlsx)** employee snapshots and returns:
+
+- Unique employees and active headcount
+- Observed employee churn rate when `left_company` is supplied
+- Predicted aggregate attrition rate for active employees
+- High-risk active employee count
+- Average engagement KPI
+- Department-level attrition pressure
+- Employee-level retention review queue with the main operational signals behind the score
+
+Downloadable templates are built into the app:
+
+- `/api/employee-attrition/template.csv`
+- `/api/employee-attrition/template.xlsx`
+
+The employee model intentionally does **not** request protected demographic attributes such as age, gender, ethnicity, religion, disability or marital status. It is a synthetic retention/workforce-planning demonstration and must not be used for termination, hiring, compensation, promotion or other employment decisions.
+
 ## Production adaptation
 
 For a real SaaS company, the synthetic generator would be replaced with a scheduled feature pipeline from sources such as:
