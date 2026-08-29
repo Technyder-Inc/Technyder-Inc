@@ -55,7 +55,7 @@ SIGNAL_GUIDANCE = {
         "benchmark": "Engagement below 60/100",
         "why": (
             "Lower engagement can be associated with weaker attachment to the role or team. "
-            "The model only raises this signal below 60, and the effect grows gradually as the score falls."
+            "Risk increases progressively when engagement falls below 60."
         ),
         "caution": (
             "Engagement is a directional workforce signal, not proof that an employee plans to leave. "
@@ -66,7 +66,7 @@ SIGNAL_GUIDANCE = {
         "benchmark": "More than 12 overtime hours in 30 days",
         "why": (
             "Sustained overtime can indicate workload pressure or capacity imbalance. "
-            "The model increases risk only for overtime above the 12-hour reference point."
+            "Risk increases only above the 12-hour reference point."
         ),
         "caution": (
             "Check whether the overtime is temporary, seasonal, or voluntary."
@@ -104,7 +104,7 @@ SIGNAL_GUIDANCE = {
         "benchmark": "Manager changes during the last 12 months",
         "why": (
             "Repeated manager changes can reduce continuity, clarity, and relationship stability. "
-            "The model therefore gives this signal a larger stepwise effect."
+            "This receives a larger stepwise effect."
         ),
         "caution": (
             "Review the reason and outcome of each management change."
@@ -114,7 +114,7 @@ SIGNAL_GUIDANCE = {
         "benchmark": "More than 24 months since promotion",
         "why": (
             "Long periods without visible progression can create career-growth pressure. "
-            "The model starts increasing risk after 24 months."
+            "Risk starts increasing after 24 months."
         ),
         "caution": (
             "Compare with the normal progression path for the role."
@@ -124,7 +124,7 @@ SIGNAL_GUIDANCE = {
         "benchmark": "More than 18 months since pay raise",
         "why": (
             "A long gap in compensation progression can contribute to retention pressure. "
-            "The model starts increasing risk after 18 months."
+            "Risk starts increasing after 18 months."
         ),
         "caution": (
             "This is a retention signal, not a pay recommendation."
@@ -143,7 +143,7 @@ SIGNAL_GUIDANCE = {
         "benchmark": "Less than 6 months tenure",
         "why": (
             "Early-tenure employees often have less organizational attachment and are still validating role fit, "
-            "so the model adds a one-time early-tenure risk factor."
+            "so short tenure adds a one-time risk factor."
         ),
         "caution": (
             "Use this signal to review onboarding and manager support."
@@ -517,17 +517,17 @@ def analyze_employee_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "medium_risk_threshold": MEDIUM_RISK_THRESHOLD,
             "high_risk_threshold": HIGH_RISK_THRESHOLD,
             "scope": (
-                "Retention and workforce-planning signal review. "
-                "The model combines operational indicators into a probability-like risk score."
+                "Retention and workforce planning. "
+                "Selected workforce indicators are combined into a single attrition risk score."
             ),
             "interpretation": (
-                "A raised signal means the uploaded value crossed a model reference point and "
-                "increased the score. It does not prove why an employee might leave."
+                "A driver appears when an employee value crosses its reference point and "
+                "changes the attrition score."
             ),
         },
         "model_note": (
-            "This demo is designed for aggregate retention and workforce-planning analysis. "
-            "It must not be used to make termination, hiring, compensation, promotion, discipline, "
+            "Use this analysis for retention planning and workforce review. "
+            "Do not use it for termination, hiring, compensation, promotion, discipline, "
             "or other employment decisions about an individual."
         ),
     }
@@ -561,22 +561,22 @@ def _xlsx_template() -> bytes:
     dd = wb.create_sheet("Data_Dictionary")
     dd.append(["Column", "Required", "Description"])
     descriptions = {
-        "employee_id": "Unique employee identifier; avoid names/emails in demo uploads.",
+        "employee_id": "Unique employee identifier; avoid names or email addresses in uploads.",
         "snapshot_date": "Snapshot date in YYYY-MM-DD format.",
         "department": "Department or business function.",
         "role_level": "Role level such as Junior, Mid, Senior, Lead, Manager.",
         "tenure_months": "Months employed at snapshot date.",
-        "monthly_salary": "Monthly base salary; not used by the demo risk score.",
+        "monthly_salary": "Monthly base salary; not used by the current risk score.",
         "overtime_hours_30d": "Overtime hours in the last 30 days.",
         "avg_weekly_hours": "Average weekly working hours.",
         "absent_days_90d": "Absent days in the last 90 days.",
         "late_days_90d": "Late arrivals in the last 90 days.",
-        "performance_score": "1-5 performance score; not used by the demo risk score.",
+        "performance_score": "1-5 performance score; not used by the current risk score.",
         "engagement_score": "0-100 engagement score.",
         "manager_changes_12m": "Number of manager changes in the last 12 months.",
         "months_since_promotion": "Months since last promotion.",
         "training_hours_90d": "Training hours in the last 90 days.",
-        "remote_days_week": "Average remote days per week; not used by the demo risk score.",
+        "remote_days_week": "Average remote days per week; not used by the current risk score.",
         "commute_minutes": "One-way commute minutes.",
         "pay_raise_months_ago": "Months since last pay raise.",
         "left_company": (
@@ -635,7 +635,7 @@ async def upload_employee_file(file: UploadFile = File(...)):
 
     content = await file.read()
     if len(content) > 5 * 1024 * 1024:
-        raise HTTPException(status_code=413, detail="Demo upload limit is 5 MB.")
+        raise HTTPException(status_code=413, detail="Upload limit is 5 MB.")
 
     try:
         rows = (
@@ -650,7 +650,7 @@ async def upload_employee_file(file: UploadFile = File(...)):
 
     if len(rows) > 5000:
         raise HTTPException(
-            status_code=413, detail="Demo upload limit is 5,000 rows."
+            status_code=413, detail="Upload limit is 5,000 rows."
         )
 
     return analyze_employee_rows(rows)
