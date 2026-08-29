@@ -1,0 +1,44 @@
+name: Retention Intelligence CI
+
+on:
+  push:
+    paths:
+      - "portfolio/customer-retention-intelligence/**"
+      - ".github/workflows/retention-intelligence-ci.yml"
+  pull_request:
+    paths:
+      - "portfolio/customer-retention-intelligence/**"
+      - ".github/workflows/retention-intelligence-ci.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: portfolio/customer-retention-intelligence
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: |
+            portfolio/customer-retention-intelligence/requirements.txt
+            portfolio/customer-retention-intelligence/requirements-training.txt
+            portfolio/customer-retention-intelligence/requirements-dev.txt
+
+      - run: pip install -r requirements-dev.txt
+      - run: python build.py
+      - run: pytest
+
+      - name: Guard portable artifact size
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path("artifacts/runtime_model.b64")
+          assert p.exists(), "portable runtime artifact missing"
+          assert p.stat().st_size < 1_000_000, f"portable artifact too large: {p.stat().st_size}"
+          print(f"portable artifact size: {p.stat().st_size / 1024:.1f} KB")
+          PY
