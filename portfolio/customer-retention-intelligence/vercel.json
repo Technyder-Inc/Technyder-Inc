@@ -2,7 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
     "app.py": {
-      "includeFiles": "artifacts/runtime_model.b64"
+      "excludeFiles": "{ml/**,tests/**,docs/**,data/**,assets/**,public/**,artifacts/retention_model.joblib,artifacts/model_card.json,artifacts/feature_importance.json,artifacts/drift_report.json,artifacts/portfolio_sample.json,artifacts/test_scored.csv}"
     }
   }
 }
