@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+.DS_Store
+.env
+data/synthetic_saas_churn.csv
+artifacts/retention_model.joblib
+artifacts/model_card.json
+artifacts/feature_importance.json
+artifacts/portfolio_sample.json
+artifacts/drift_report.json
+artifacts/test_scored.csv
