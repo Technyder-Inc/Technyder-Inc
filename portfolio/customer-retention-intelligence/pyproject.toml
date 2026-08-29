@@ -1,0 +1,9 @@
+[project]
+name = "retention-intelligence"
+version = "1.0.0"
+description = "Production-style churn, revenue-at-risk, explainability and uplift demo"
+requires-python = ">=3.12,<3.14"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+addopts = "-q"

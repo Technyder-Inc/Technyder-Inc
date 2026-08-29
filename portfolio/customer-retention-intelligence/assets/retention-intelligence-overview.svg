@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820">
+<rect width="1400" height="820" fill="#F7F8FA"/>
+<rect x="55" y="50" width="1290" height="720" rx="28" fill="#FFFFFF" stroke="#E5E7EB"/>
+<text x="105" y="120" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" fill="#667085">TECHNYDER / ML PORTFOLIO</text>
+<text x="105" y="180" font-family="Arial,Helvetica,sans-serif" font-size="46" font-weight="800" fill="#111827">Customer Retention Intelligence</text>
+<text x="105" y="225" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#667085">Predict churn. Explain risk. Quantify revenue exposure. Prioritize customers worth saving.</text>
+
+<g>
+<rect x="105" y="285" width="260" height="120" rx="18" fill="#FAFAFA" stroke="#E5E7EB"/>
+<text x="130" y="320" font-family="Arial" font-size="16" fill="#667085">ROC-AUC</text>
+<text x="130" y="370" font-family="Arial" font-size="38" font-weight="800" fill="#111827">0.796</text>
+
+<rect x="385" y="285" width="260" height="120" rx="18" fill="#FAFAFA" stroke="#E5E7EB"/>
+<text x="410" y="320" font-family="Arial" font-size="16" fill="#667085">PR-AUC</text>
+<text x="410" y="370" font-family="Arial" font-size="38" font-weight="800" fill="#111827">0.331</text>
+
+<rect x="665" y="285" width="260" height="120" rx="18" fill="#FAFAFA" stroke="#E5E7EB"/>
+<text x="690" y="320" font-family="Arial" font-size="16" fill="#667085">Prediction Window</text>
+<text x="690" y="370" font-family="Arial" font-size="38" font-weight="800" fill="#111827">60 days</text>
+
+<rect x="945" y="285" width="300" height="120" rx="18" fill="#FAFAFA" stroke="#E5E7EB"/>
+<text x="970" y="320" font-family="Arial" font-size="16" fill="#667085">Business Output</text>
+<text x="970" y="360" font-family="Arial" font-size="25" font-weight="800" fill="#111827">Retention Priority Queue</text>
+</g>
+
+<text x="105" y="475" font-family="Arial" font-size="16" font-weight="700" fill="#667085">DECISION PIPELINE</text>
+<g font-family="Arial" font-size="17" text-anchor="middle">
+<rect x="105" y="510" width="205" height="90" rx="16" fill="#FAFAFA" stroke="#D0D5DD"/>
+<text x="207" y="545" fill="#111827" font-weight="700">Customer Signals</text><text x="207" y="570" fill="#667085">usage · NPS · billing</text>
+
+<rect x="345" y="510" width="205" height="90" rx="16" fill="#FAFAFA" stroke="#D0D5DD"/>
+<text x="447" y="545" fill="#111827" font-weight="700">Churn Model</text><text x="447" y="570" fill="#667085">XGBoost + calibration</text>
+
+<rect x="585" y="510" width="205" height="90" rx="16" fill="#FAFAFA" stroke="#D0D5DD"/>
+<text x="687" y="545" fill="#111827" font-weight="700">Explainability</text><text x="687" y="570" fill="#667085">top risk drivers</text>
+
+<rect x="825" y="510" width="205" height="90" rx="16" fill="#FAFAFA" stroke="#D0D5DD"/>
+<text x="927" y="545" fill="#111827" font-weight="700">Uplift Model</text><text x="927" y="570" fill="#667085">who responds to action</text>
+
+<rect x="1065" y="510" width="205" height="90" rx="16" fill="#FAFAFA" stroke="#D0D5DD"/>
+<text x="1167" y="545" fill="#111827" font-weight="700">Economic Priority</text><text x="1167" y="570" fill="#667085">expected retained value</text>
+</g>
+
+<g stroke="#98A2B3" stroke-width="3">
+<line x1="310" y1="555" x2="345" y2="555"/><line x1="550" y1="555" x2="585" y2="555"/><line x1="790" y1="555" x2="825" y2="555"/><line x1="1030" y1="555" x2="1065" y2="555"/>
+</g>
+<text x="105" y="680" font-family="Arial" font-size="18" fill="#667085">Synthetic B2B SaaS dataset · FastAPI · Docker · CI · drift monitoring · business-value thresholding</text>
+<text x="105" y="720" font-family="Arial" font-size="14" fill="#98A2B3">All data is synthetic. Model explanations are associative; uplift requires causally credible treatment history in production.</text>
+</svg>
