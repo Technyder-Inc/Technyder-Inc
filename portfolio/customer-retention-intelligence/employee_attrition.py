@@ -599,6 +599,7 @@ def _xlsx_template() -> bytes:
 
 
 @router.get("/employees", response_class=HTMLResponse)
+@router.get("/api/employees", response_class=HTMLResponse)
 def employee_page():
     return EMPLOYEE_PAGE
 
